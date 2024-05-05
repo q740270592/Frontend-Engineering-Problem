@@ -1,0 +1,17 @@
+.countrySort{
+    margin: 0 auto;
+    width: 800px;
+    border: 1px solid black;
+    
+}
+.heardCell{
+    display: flex;
+    justify-content: space-around;
+}
+.heardCell>div{
+    width: 50%;
+    border-bottom: 1px solid black;
+}
+.numberStyle{
+    border-left: 1px solid black;
+}
