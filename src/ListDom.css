@@ -1,6 +1,6 @@
-.countrySort{
+.tableStyle{
     margin: 0 auto;
-    width: 800px;
+    width: 1000px;
     border: 1px solid black;
     
 }
@@ -14,4 +14,38 @@
 }
 .numberStyle{
     border-left: 1px solid black;
+}
+h4{
+    margin-bottom: 20px;
+}
+.countrySort{
+    margin: 0 auto;
+    width: 1000px;
+    display: flex;
+    justify-content: space-between;
+}
+.countryHeardCell{
+    display: flex;
+    justify-content: space-around;
+}
+.clickStyle{
+    color: blue;
+    text-decoration: underline;
+}
+.leftData .hoverStyle>div:hover {
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+}
+.countryHeardCell>div{
+    flex: 1;
+    border-bottom: 1px solid black;
+}
+.leftData{
+    width: 200px;
+    border: 1px solid black;
+}
+.rightData{
+    width: 750px;
+    border: 1px solid black;
 }

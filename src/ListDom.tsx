@@ -6,6 +6,8 @@ export const ListRecord = () => {
     const [userNumberSort, setUserNumberSort]:any[] = useState([]);
     const [countryUser, setCountryUser]:any[] = useState([]);
     const [selectCountry, setSelectCountry] = useState('All');
+    const [clickCountry, setClickCountry] = useState('');
+    const [clickCountryList, setClickCountryList]:any[] = useState([]);
     const [countryList, setCountryList]:any[] = useState([]);
     const [genderVal, setGenderVal] = useState('All');
     const [genderValList, setGenderValList]:any[] = useState([]);
@@ -52,8 +54,6 @@ export const ListRecord = () => {
         getList()
     }, [])
     const getCurData = (value?: string) => {
-        console.log(value);
-        
         let newList: any[] = []
         if(value === 'All') {
             newList = listValue
@@ -83,10 +83,21 @@ export const ListRecord = () => {
         setCountryUser(newList)
         setSelectCountry(value || '')
     }
+    const clickCountryFunction = (val: any) => {
+        let newArr:any [] = []
+        for(let i = 0 ; i < listValue.length; i++) {
+            console.log()
+            if(val === listValue[i]?.location?.country){
+                newArr.push(listValue[i])
+            }
+        }
+        setClickCountryList(newArr)
+        setClickCountry(val)
+    }
     return (
         <div>
             <h4>Render a list of Countries sorted by the number of Users in each country</h4>
-            <div className='countrySort'>
+            <div className='tableStyle'>
                 <div className='heardCell'>
                     <div>country</div>
                     <div className='numberStyle'>number</div>
@@ -98,6 +109,37 @@ export const ListRecord = () => {
                     </div>
                 ))}
             </div>
+            <h4>Clicking a country should expand the list of users in that country sorted by the date registered most recent first</h4>
+            <div className='countrySort'>
+                <div className='leftData'>
+                    <div className='countryHeardCell'>
+                        <div>country</div>
+                    </div>
+                    {userNumberSort.map((val : any, index: any) => (
+                        <div className='countryHeardCell hoverStyle' key={index}>
+                            <div className={clickCountry === val?.country ? 'clickStyle' : ''} onClick={() => {clickCountryFunction(val?.country)}}>{val?.country || ''}</div>
+                        </div>
+                    ))}
+                </div>
+                <div className='rightData'>
+                    <div className='heardCell'>
+                        <div>Name</div>
+                        <div className='numberStyle'>Gender</div>
+                        <div className='numberStyle'>City</div>
+                        <div className='numberStyle'>State</div>
+                        <div className='numberStyle'>Date Registered</div>
+                    </div>
+                    {clickCountryList && clickCountryList.length > 0 ? clickCountryList?.map((val : any, index: any) => (
+                        <div className='heardCell' key={index}>
+                            <div>{val?.name?.first || ''} {val?.name?.last || ''}</div>
+                            <div className='numberStyle'>{val?.gender || ''}</div>
+                            <div className='numberStyle'>{val?.location?.city || ''}</div>
+                            <div className='numberStyle'>{val?.location?.state || ''}</div>
+                            <div className='numberStyle'>{val?.registered?.date || ''}</div>
+                        </div>
+                    )) : 'Please select the country on the left'}
+                </div>
+            </div>
             <h4>Only one country's users should be visible at once</h4>
             <select value={selectCountry}  onChange={e => getCountryUser(e.target.value)} >
                 <option value="All">All</option>
@@ -105,15 +147,23 @@ export const ListRecord = () => {
                     <option key={index} value={val}>{val || ''}</option>
                 ))}
             </select>
-            <div className='countrySort'>
+            <div className='tableStyle'>
                 <div className='heardCell'>
-                    <div>country</div>
-                    <div className='numberStyle'>name</div>
+                    <div>Country</div>
+                    <div className='numberStyle'>Name</div>
+                    <div className='numberStyle'>Gender</div>
+                    <div className='numberStyle'>City</div>
+                    <div className='numberStyle'>State</div>
+                    <div className='numberStyle'>Date Registered</div>
                 </div>
                 {countryUser.map((val : any, index: any) => (
                     <div className='heardCell' key={index}>
                         <div>{val?.location?.country || ''}</div>
-                        <div className='numberStyle'>{val?.name?.title || ''} {val?.name?.first || ''} {val?.name?.last || ''}</div>
+                        <div className='numberStyle'>{val?.name?.first || ''} {val?.name?.last || ''}</div>
+                        <div className='numberStyle'>{val?.gender || ''}</div>
+                        <div className='numberStyle'>{val?.location?.city || ''}</div>
+                        <div className='numberStyle'>{val?.location?.state || ''}</div>
+                        <div className='numberStyle'>{val?.registered?.date || ''}</div>
                     </div>
                 ))}
             </div>
@@ -123,22 +173,26 @@ export const ListRecord = () => {
                 <option value="female">Female</option>
                 <option value="All">All</option>
             </select>
-            <div className='countrySort'>
+            <div className='tableStyle'>
                 <div className='heardCell'>
-                    <div>name</div>
-                    <div className='numberStyle'>gender</div>
+                    <div>Country</div>
+                    <div className='numberStyle'>Name</div>
+                    <div className='numberStyle'>Gender</div>
+                    <div className='numberStyle'>City</div>
+                    <div className='numberStyle'>State</div>
+                    <div className='numberStyle'>Date Registered</div>
                 </div>
                 {genderValList.map((val : any, index: any) => (
                     <div className='heardCell' key={index}>
-                        <div>{val?.name?.title || ''} {val?.name?.first || ''} {val?.name?.last || ''}</div>
+                        <div>{val?.location?.country || ''}</div>
+                        <div className='numberStyle'>{val?.name?.first || ''} {val?.name?.last || ''}</div>
                         <div className='numberStyle'>{val?.gender || ''}</div>
+                        <div className='numberStyle'>{val?.location?.city || ''}</div>
+                        <div className='numberStyle'>{val?.location?.state || ''}</div>
+                        <div className='numberStyle'>{val?.registered?.date || ''}</div>
                     </div>
                 ))}
             </div>
         </div>
-        // {listValue}
-        // {listValue.map(({ val, label }: any, index: any) => (
-            
-        // ))}
     );
 };
